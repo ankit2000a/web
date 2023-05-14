@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>YouTube to MP4 Converter</title>
+</head>
+<body>
+<h1>YouTube to MP4 Converter</h1>
+<p>Enter the URL of the YouTube video you want to convert:</p>
+<input type="text" id="video-url" />
+<p><button id="convert-button">Convert</button></p>
+<div id="output"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/youtube-dl/2022.01.26/youtube-dl.min.js"></script>
+<script>
+const videoUrlInput = document.getElementById("video-url");
+const convertButton = document.getElementById("convert-button");
+const outputDiv = document.getElementById("output");
+
+convertButton.addEventListener("click", () => {
+  const videoUrl = videoUrlInput.value;
+  if (!videoUrl) {
+    alert("Please enter a YouTube video URL.");
+    return;
+  }
+
+  // Convert the YouTube video to MP4.
+  try {
+    youtubeDl.download(videoUrl, {
+      format: "bestvideo[ext=mp4]",
+      extractaudio: false,
+    });
+
+    // Display the output in the output div.
+    outputDiv.innerHTML = `
+      <p>The video has been converted to MP4.</p>
+      <a href="output.mp4">Download the video</a>
+    `;
+  } catch (error) {
+    outputDiv.innerHTML = `
+      <p>An error occurred while converting the video:</p>
+      <p>${error}</p>
+    `;
+  }
+});
+</script>
+</body>
+</html>
